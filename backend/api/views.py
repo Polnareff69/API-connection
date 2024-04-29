@@ -52,18 +52,18 @@ class ToDoToggleComplete(generics.UpdateAPIView):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
-    try:
-        data = JSONParser().parse(request) # data is a dictionary
-        user = User.objects.create_user(
-        username=data['username'],
-        password=data['password'])
-        user.save()
-        token = Token.objects.create(user=user)
-        return JsonResponse({'token':str(token)},status=201)
-    except IntegrityError:
-        return JsonResponse(
-        {'error':'username taken. choose another username'},
-        status=400)
+        try:
+            data = JSONParser().parse(request) # data is a dictionary
+            user = User.objects.create_user(
+            username=data['username'],
+            password=data['password'])
+            user.save()
+            token = Token.objects.create(user=user)
+            return JsonResponse({'token':str(token)},status=201)
+        except IntegrityError:
+            return JsonResponse(
+            {'error':'username taken. choose another username'},
+            status=400)
 
 @csrf_exempt
 def login(request):
